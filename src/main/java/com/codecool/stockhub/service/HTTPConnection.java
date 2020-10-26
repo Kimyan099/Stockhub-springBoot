@@ -12,6 +12,7 @@ import java.net.URL;
 @Component
 public class HTTPConnection {
 
+    private final StringBuilder content;
 
     public HTTPConnection() throws IOException {
         URL url = new URL("https://finnhub.io/api/v1/stock/symbol?exchange=US&token=bu21mlf48v6u9tetnbt0");
@@ -24,7 +25,7 @@ public class HTTPConnection {
                 new InputStreamReader(con.getInputStream()));
         String inputLine;
 
-        StringBuilder content = new StringBuilder();
+        content = new StringBuilder();
         while ((inputLine = in.readLine()) != null) {
             content.append(inputLine);
         }
@@ -36,5 +37,7 @@ public class HTTPConnection {
 
     }
 
-
+    public StringBuilder getContent() {
+        return content;
+    }
 }
