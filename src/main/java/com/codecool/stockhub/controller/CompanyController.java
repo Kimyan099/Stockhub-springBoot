@@ -17,11 +17,13 @@ public class CompanyController {
     @Autowired
     private HTTPConnection httpConnection;
 
+    private static final String COMPANIES_URL = "https://finnhub.io/api/v1/stock/symbol?exchange=US&token=bu21mlf48v6u9tetnbt0";
+
     @GetMapping("/companies")
     public StringBuilder companyList(HttpServletResponse response) throws IOException {
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setStatus(200);
-        return httpConnection.getContent();
+        return httpConnection.getContent(COMPANIES_URL);
     }
 
 
