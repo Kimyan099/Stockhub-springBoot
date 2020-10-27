@@ -1,7 +1,10 @@
 package com.codecool.stockhub.controller;
 
 
+import com.codecool.stockhub.model.Company;
+import com.codecool.stockhub.service.CompanyList;
 import com.codecool.stockhub.service.HTTPConnection;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,14 +20,22 @@ public class CompanyController {
     @Autowired
     private HTTPConnection httpConnection;
 
+    @Autowired
+    private CompanyList companyList;
+
     private static final String COMPANIES_URL = "https://finnhub.io/api/v1/stock/symbol?exchange=US&token=bu21mlf48v6u9tetnbt0";
 
     @GetMapping("/companies")
-    public StringBuilder companyList(HttpServletResponse response) throws IOException {
+    public List<Company> companyList(HttpServletResponse response) throws IOException, JSONException {
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setStatus(200);
-        return httpConnection.getContent(COMPANIES_URL);
+        String jsonResponse = httpConnection.getContent("https://finnhub.io/api/v1/stock/symbol?exchange=US&token=bu21mlf48v6u9tetnbt0");
+        companyList.filterData(jsonResponse);
+        return companyList.getCompanies();
     }
+
+
+
 
 
 
