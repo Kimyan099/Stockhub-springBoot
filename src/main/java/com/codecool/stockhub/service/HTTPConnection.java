@@ -1,5 +1,7 @@
 package com.codecool.stockhub.service;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -11,11 +13,10 @@ import java.net.URL;
 
 @Component
 public class HTTPConnection {
+    private StringBuilder content;
 
-    private final StringBuilder content;
-
-    public HTTPConnection() throws IOException {
-        URL url = new URL("https://finnhub.io/api/v1/stock/symbol?exchange=US&token=bu21mlf48v6u9tetnbt0");
+    public StringBuilder getContent(String api) throws IOException {
+        URL url = new URL(api);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");
         System.out.println();
@@ -35,9 +36,7 @@ public class HTTPConnection {
 
         con.disconnect();
 
-    }
-
-    public StringBuilder getContent() {
         return content;
+
     }
 }
