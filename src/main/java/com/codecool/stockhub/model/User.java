@@ -6,27 +6,22 @@ import java.util.UUID;
 
 public class User {
 
-    public static final int BALANCE = 5000;
     private String name;
-    private UUID uuid;
+    private UUID uuid = UUID.randomUUID();
     private String password;
     private String email;
-    private final Map<Stock, Integer> stocks = new HashMap<>();
-    private double balance;
+
+    private final double balance = 5000;
 
     public User(String name, String password, String email) {
         System.out.println(name);
         System.out.println(password);
         this.name = name;
-        this.uuid = UUID.randomUUID();
         this.password = password;
         this.email = email;
-        this.balance = BALANCE;
     }
 
-//    public User(){
-//
-//    }
+    public User(){}
 
     public void setName(String name) {
         this.name = name;
@@ -40,20 +35,10 @@ public class User {
         this.email = email;
     }
 
-    public void buyStock(Stock stock, int amount) {
-        balance -= stock.getPrice() * amount;
-        stocks.put(stock, amount);
-    }
-
-    public void sellStock(Stock stock, int amount) {
-        balance += stock.getPrice() * amount;
-        stocks.remove(stock, amount);
-    }
 
     public String getName() {
         return name;
     }
-
 
 
     public UUID getUuid() {
@@ -66,10 +51,6 @@ public class User {
 
     public String getEmail() {
         return email;
-    }
-
-    public Map<Stock, Integer> getStocks() {
-        return stocks;
     }
 
     public double getBalance() {
