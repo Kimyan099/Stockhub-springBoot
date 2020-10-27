@@ -20,7 +20,7 @@ public class NewsController {
     private static final String NEWS_URL = "https://finnhub.io/api/v1/news?category=general&token=bu2rf9f48v6pqlhnnvtg";
 
     @GetMapping("/news")
-    public StringBuilder companyList(HttpServletResponse response) throws IOException {
+    public StringBuilder newsList(HttpServletResponse response) throws IOException {
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setStatus(200);
         return httpConnection.getContent(NEWS_URL);
