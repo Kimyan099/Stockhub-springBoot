@@ -7,7 +7,6 @@ import com.codecool.stockhub.service.HTTPConnection;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
@@ -29,7 +28,7 @@ public class CompanyController {
     public List<Company> companyList(HttpServletResponse response) throws IOException, JSONException {
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setStatus(200);
-        String jsonResponse = httpConnection.getContent("https://finnhub.io/api/v1/stock/symbol?exchange=US&token=bu21mlf48v6u9tetnbt0");
+        String jsonResponse = httpConnection.getContent(COMPANIES_URL);
         companyList.filterData(jsonResponse);
         return companyList.getCompanies();
     }
