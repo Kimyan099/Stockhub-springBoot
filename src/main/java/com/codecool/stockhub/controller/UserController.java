@@ -35,4 +35,21 @@ public class UserController {
         return userList.getUsers();
     }
 
+    @CrossOrigin(origins = "*")
+    @PostMapping(value = "/user")
+    public boolean update(String email, HttpServletResponse response) throws Exception {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setStatus(200);
+        return userList.isUserExist(email);
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping(value = "/login")
+    public String update(String email, String password, HttpServletResponse response) throws Exception {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setStatus(200);
+        return userList.checkIfCanLogIn(email, password);
+    }
+
+
 }
