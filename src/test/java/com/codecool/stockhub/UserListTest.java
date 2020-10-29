@@ -17,12 +17,12 @@ public class UserListTest {
     @Autowired
     UserList userList;
 
-    @Test
-    void testIsUserExistValidEmailReturnsTrue() {
-        //User mockedUser = Mockito.mock(User.class);
-        //String email = ReflectionUtils.findField(User.getClass(), [Field name], [Field type]);
-        //ReflectionUtils.makeAccessible(field);
-        //ReflectionUtils.setField(field, a, [Field value]);
-        //assertTrue(userList.isUserExist("foo"));
-    }
+//    @Test
+//    void testIsUserExistValidEmailReturnsTrue() {
+//        //User mockedUser = Mockito.mock(User.class);
+//        //String email = ReflectionUtils.findField(User.getClass(), [Field name], [Field type]);
+//        //ReflectionUtils.makeAccessible(field);
+//        //ReflectionUtils.setField(field, a, [Field value]);
+//        //assertTrue(userList.isUserExist("foo"));
+//    }
 }
