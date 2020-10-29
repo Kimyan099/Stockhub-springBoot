@@ -46,6 +46,6 @@ public class UserList {
                 }
             }
         }
-        return "Guestt";
+        return "Guest";
     }
 }
