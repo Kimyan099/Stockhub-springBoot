@@ -8,9 +8,13 @@ import java.io.IOException;
 @Component
 public class HTTPConnection {
 
-    public String getContent(String api) throws IOException {
+    public String getContent(String api) throws IllegalArgumentException {
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForObject(api, String.class);
+        try {
+            return restTemplate.getForObject(api, String.class);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid URL");
+        }
 
     }
 }
