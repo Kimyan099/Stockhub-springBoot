@@ -30,6 +30,8 @@ public class CompanyList {
             company.setSymbol(currentJsonObject.getString("symbol"));
             company.setDescription(currentJsonObject.getString("description"));
             companies.add(company);
+
+
         }
     }
 
