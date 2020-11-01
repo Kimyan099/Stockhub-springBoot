@@ -1,15 +1,18 @@
 package com.codecool.stockhub.service;
 
+import com.codecool.stockhub.logger.ExceptionLog;
 import com.codecool.stockhub.model.Company;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.LinkedList;
 import java.util.List;
 
-@Component
+@Service
 public class CompanyList {
 
     private List<Company> companies = new LinkedList<>();
@@ -19,20 +22,22 @@ public class CompanyList {
     }
 
 
-    public void filterData(String content) throws JSONException {
+    @ExceptionHandler({ JSONException.class, IllegalArgumentException.class, NullPointerException.class, IndexOutOfBoundsException.class })
+    public void filterData(String content) {
+        try {
+            JSONArray contentJsonArray = new JSONArray(content);
 
-        JSONArray contentJsonArray = new JSONArray(content);
+            for (int i = 0; i < contentJsonArray.length(); i++) {
+                Company company = new Company();
+                JSONObject currentJsonObject = contentJsonArray.getJSONObject(i);
 
-        for (int i = 0; i < contentJsonArray.length(); i++) {
-            Company company = new Company();
-            JSONObject currentJsonObject = contentJsonArray.getJSONObject(i);
-
-            company.setSymbol(currentJsonObject.getString("symbol"));
-            company.setDescription(currentJsonObject.getString("description"));
-            companies.add(company);
-
-
+                company.setSymbol(currentJsonObject.getString("symbol"));
+                company.setDescription(currentJsonObject.getString("description"));
+                companies.add(company);
+            }
+        } catch (Exception e) {
+            new ExceptionLog(e);
+            throw new IllegalArgumentException("Argument type is not valid");
         }
     }
-
 }
