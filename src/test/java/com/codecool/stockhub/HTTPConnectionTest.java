@@ -5,8 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.io.IOException;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -17,13 +15,13 @@ class HTTPConnectionTest {
 
 
     @Test
-    void testGetContentWithWrongUrlInput() {
-        assertThrows(IllegalArgumentException.class, () -> testHTTPConnection.getContent(""));
+    void testGetContentWithCorrectUrlInput() {
+        assertDoesNotThrow(() -> testHTTPConnection.getContent("https://finnhub.io/api/v1/news?category=general&token=bu2rf9f48v6pqlhnnvtg"));
     }
 
     @Test
-    void testGetContentWithCorrectUrlInput() {
-        assertDoesNotThrow(() -> testHTTPConnection.getContent("https://finnhub.io/api/v1/news?category=general&token=bu2rf9f48v6pqlhnnvtg"));
+    void testGetContentWithNoInput_ShouldThrow_Exception() {
+        assertThrows(IllegalArgumentException.class, () -> testHTTPConnection.getContent(""));
     }
 
 
