@@ -1,9 +1,7 @@
 package com.codecool.stockhub.controller;
 
-
 import com.codecool.stockhub.logger.ExceptionLog;
 import com.codecool.stockhub.service.HTTPConnection;
-import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -12,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileNotFoundException;
-import java.io.IOException;
+
 
 @RestController
 public class NewsController {
@@ -25,7 +23,7 @@ public class NewsController {
     @ExceptionHandler({ IllegalArgumentException.class, FileNotFoundException.class })
     @CrossOrigin("*")
     @GetMapping("/news")
-    public String newsList(HttpServletResponse response) throws IOException {
+    public String newsList(HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         try {
             response.setStatus(200);
@@ -33,10 +31,8 @@ public class NewsController {
 
         }catch (Exception e) {
             response.setStatus(400);
-            response.getWriter().println("News not found");
-            new ExceptionLog(e);
-            throw new FileNotFoundException("File not found");
+            new ExceptionLog(e.getMessage(), e);
         }
-
+            return "";
     }
 }

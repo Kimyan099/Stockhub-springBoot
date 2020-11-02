@@ -1,20 +1,18 @@
 package com.codecool.stockhub.controller;
 
-
 import com.codecool.stockhub.logger.ExceptionLog;
 import com.codecool.stockhub.model.Company;
 import com.codecool.stockhub.service.CompanyList;
 import com.codecool.stockhub.service.HTTPConnection;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
+
 
 @RestController
 public class CompanyController {
@@ -30,7 +28,7 @@ public class CompanyController {
     @ExceptionHandler({ JSONException.class, IllegalArgumentException.class, FileNotFoundException.class })
     @CrossOrigin("*")
     @GetMapping("/companies")
-    public List<Company> companyList(HttpServletResponse response) throws IOException {
+    public List<Company> companyList(HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
         String jsonResponse = httpConnection.getContent(COMPANIES_URL);
         try {
@@ -38,10 +36,9 @@ public class CompanyController {
             response.setStatus(200);
             return companyList.getCompanies();
         } catch (Exception e) {
-            new ExceptionLog(e);
             response.setStatus(400);
-            response.getWriter().println("Companies not found");
-            throw new FileNotFoundException("File not Found");
+            new ExceptionLog(e.getMessage(), e);
         }
+            return Collections.emptyList();
     }
 }

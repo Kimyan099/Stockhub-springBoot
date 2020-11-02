@@ -1,27 +1,28 @@
 package com.codecool.stockhub.model;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 public class User {
 
+    public static final double BALANCE = 5000;
     private String name;
-    private UUID uuid = UUID.randomUUID();
+    private UUID uuid;
     private String password;
     private String email;
-
-    private final double balance = 5000;
+    private double balance;
 
     public User(String name, String password, String email) {
-        System.out.println(name);
-        System.out.println(password);
         this.name = name;
         this.password = password;
         this.email = email;
+        this.uuid = UUID.randomUUID();
+        this.balance = BALANCE;
     }
 
-    public User(){}
+    public User(){
+        this.uuid = UUID.randomUUID();
+    }
+
 
     public void setName(String name) {
         this.name = name;

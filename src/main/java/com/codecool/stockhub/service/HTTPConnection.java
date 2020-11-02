@@ -1,12 +1,12 @@
 package com.codecool.stockhub.service;
 
 import com.codecool.stockhub.logger.ExceptionLog;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
 
 @Service
 public class HTTPConnection {
@@ -17,7 +17,7 @@ public class HTTPConnection {
         try {
             return restTemplate.getForObject(api, String.class);
         } catch (Exception e) {
-            new ExceptionLog(e);
+            new ExceptionLog(e.getMessage(), e);
             throw new IllegalArgumentException("Invalid URL");
         }
     }

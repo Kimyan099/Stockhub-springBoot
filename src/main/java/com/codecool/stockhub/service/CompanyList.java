@@ -5,12 +5,12 @@ import com.codecool.stockhub.model.Company;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.LinkedList;
 import java.util.List;
+
 
 @Service
 public class CompanyList {
@@ -22,7 +22,7 @@ public class CompanyList {
     }
 
 
-    @ExceptionHandler({ JSONException.class, IllegalArgumentException.class, NullPointerException.class, IndexOutOfBoundsException.class })
+    @ExceptionHandler({ JSONException.class, IllegalArgumentException.class, IndexOutOfBoundsException.class })
     public void filterData(String content) {
         try {
             JSONArray contentJsonArray = new JSONArray(content);
@@ -36,8 +36,8 @@ public class CompanyList {
                 companies.add(company);
             }
         } catch (Exception e) {
-            new ExceptionLog(e);
-            throw new IllegalArgumentException("Argument type is not valid");
+            new ExceptionLog(e.getMessage(), e);
+            throw new IllegalArgumentException("Content format is not valid");
         }
     }
 }
