@@ -7,9 +7,15 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.ReflectionUtils;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 public class UserListTest {
@@ -17,12 +23,11 @@ public class UserListTest {
     @Autowired
     UserList userList;
 
-//    @Test
-//    void testIsUserExistValidEmailReturnsTrue() {
-//        //User mockedUser = Mockito.mock(User.class);
-//        //String email = ReflectionUtils.findField(User.getClass(), [Field name], [Field type]);
-//        //ReflectionUtils.makeAccessible(field);
-//        //ReflectionUtils.setField(field, a, [Field value]);
-//        //assertTrue(userList.isUserExist("foo"));
-//    }
+
+    @Test
+    void testIsUserExistAfterRegistering() {
+        User user = Mockito.mock(User.class);
+        userList.registerUser(user);
+        assertEquals(1, userList.getUsers().size());
+    }
 }
