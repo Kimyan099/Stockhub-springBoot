@@ -15,14 +15,15 @@ import java.util.List;
 @Service
 public class CompanyList {
 
-    private List<Company> companies = new LinkedList<>();
+    private final List<Company> companies = new LinkedList<>();
 
     public List<Company> getCompanies() {
         return companies;
     }
 
+    private final ExceptionLog exceptionLog = new ExceptionLog();
 
-    @ExceptionHandler({ JSONException.class, IllegalArgumentException.class, IndexOutOfBoundsException.class })
+
     public void filterData(String content) {
         try {
             JSONArray contentJsonArray = new JSONArray(content);
@@ -35,8 +36,8 @@ public class CompanyList {
                 company.setDescription(currentJsonObject.getString("description"));
                 companies.add(company);
             }
-        } catch (Exception e) {
-            new ExceptionLog(e.getMessage(), e);
+        } catch (JSONException e) {
+            exceptionLog.log(e);
             throw new IllegalArgumentException("Content format is not valid");
         }
     }

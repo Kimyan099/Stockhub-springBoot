@@ -7,73 +7,78 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.Collections;
 import java.util.List;
 
 
 @RestController
 public class UserController {
 
+    private static final String ORIGIN = "http://localhost:3000";
 
     @Autowired
     private UserList userList;
+    private final ExceptionLog exceptionLog = new ExceptionLog();
 
-    @ExceptionHandler({ IllegalArgumentException.class, NullPointerException.class, IndexOutOfBoundsException.class})
-    @CrossOrigin(origins = "*")
+    @CrossOrigin(origins = ORIGIN)
     @PostMapping(value = "/add")
     public void addUser(@RequestBody User user, HttpServletResponse response) {
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
         try {
             userList.registerUser(user);
             response.setStatus(200);
-        } catch (Exception e) {
+
+        } catch (IllegalArgumentException e) {
             response.setStatus(400);
-            new ExceptionLog(e.getMessage(), e);
+            exceptionLog.log(e);
+            throw new IllegalArgumentException("Invalid user");
+
+        } catch (NullPointerException e) {
+            response.setStatus(400);
+            throw new NullPointerException("User not created");
         }
     }
 
-    @ExceptionHandler({ NullPointerException.class, IndexOutOfBoundsException.class, IllegalArgumentException.class })
     @GetMapping("/users")
     public List<User> getUsers(HttpServletResponse response){
-        response.setHeader("Access-Control-Allow-Origin", "*");
         try {
             response.setStatus(200);
             return userList.getUsers();
-        } catch (Exception e) {
+
+        } catch (IllegalArgumentException e) {
             response.setStatus(400);
-            new ExceptionLog(e.getMessage(), e);
+            exceptionLog.log(e);
+            throw new IllegalArgumentException("Illegal arguments in user list");
+
+        } catch (IndexOutOfBoundsException e) {
+            response.setStatus(400);
+            exceptionLog.log(e);
+            throw new IndexOutOfBoundsException("Index out of bounds");
         }
-            return Collections.emptyList();
     }
 
-    @ExceptionHandler({ NullPointerException.class, IllegalArgumentException.class, IndexOutOfBoundsException.class })
-    @CrossOrigin(origins = "*")
+    @CrossOrigin(origins = ORIGIN)
     @PostMapping(value = "/user")
-    public boolean update(String email, HttpServletResponse response) {
-        response.setHeader("Access-Control-Allow-Origin", "*");
+    public boolean isUserExist(String email, HttpServletResponse response) {
         try {
             response.setStatus(200);
             return userList.isUserExist(email);
-        } catch (Exception e) {
+
+        } catch (IllegalArgumentException e) {
             response.setStatus(400);
-            new ExceptionLog(e.getMessage(), e);
+            exceptionLog.log(e);
+            throw new IllegalArgumentException("Email in invalid format");
         }
-            return false;
     }
 
-    @ExceptionHandler({ NullPointerException.class, IndexOutOfBoundsException.class, IllegalArgumentException.class})
-    @CrossOrigin(origins = "*")
+    @CrossOrigin(origins = ORIGIN)
     @PostMapping(value = "/login")
     public String update(String email, String password, HttpServletResponse response) {
-        response.setHeader("Access-Control-Allow-Origin", "*");
         try {
             response.setStatus(200);
             return userList.checkIfCanLogIn(email, password);
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             response.setStatus(400);
-            new ExceptionLog(e.getMessage(), e);
+            exceptionLog.log(e);
+            throw new IllegalArgumentException("Invalid email or password");
         }
-            return "";
     }
 }

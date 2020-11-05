@@ -17,27 +17,29 @@ import java.util.List;
 @RestController
 public class CompanyController {
 
+    private final ExceptionLog exceptionLog = new ExceptionLog();
+    private static final String ORIGIN = "http://localhost:3000";
+    private static final String COMPANIES_URL = "https://finnhub.io/api/v1/stock/symbol?exchange=US&token=bu21mlf48v6u9tetnbt0";
+
     @Autowired
     private HTTPConnection httpConnection;
 
     @Autowired
     private CompanyList companyList;
 
-    private static final String COMPANIES_URL = "https://finnhub.io/api/v1/stock/symbol?exchange=US&token=bu21mlf48v6u9tetnbt0";
 
-    @ExceptionHandler({ JSONException.class, IllegalArgumentException.class, FileNotFoundException.class })
-    @CrossOrigin("*")
+    @CrossOrigin(origins = ORIGIN)
     @GetMapping("/companies")
     public List<Company> companyList(HttpServletResponse response) {
-        response.setHeader("Access-Control-Allow-Origin", "*");
         String jsonResponse = httpConnection.getContent(COMPANIES_URL);
         try {
             companyList.filterData(jsonResponse);
             response.setStatus(200);
             return companyList.getCompanies();
-        } catch (Exception e) {
+
+        } catch (IllegalArgumentException e) {
             response.setStatus(400);
-            new ExceptionLog(e.getMessage(), e);
+            exceptionLog.log(e);
         }
             return Collections.emptyList();
     }

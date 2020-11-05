@@ -12,7 +12,9 @@ import java.util.List;
 @Component
 public class UserList {
 
-    private List<User> users = new LinkedList<>();
+    private final ExceptionLog exceptionLog = new ExceptionLog();
+
+    private final List<User> users = new LinkedList<>();
     private User loggedInUser;
 
     public void registerUser(User user){
@@ -37,7 +39,6 @@ public class UserList {
                 return user;
             }
         }
-        new ExceptionLog("User not found");
         return new User();
     }
 
@@ -50,7 +51,6 @@ public class UserList {
         return false;
     }
 
-    @ExceptionHandler({ IllegalArgumentException.class, ArrayIndexOutOfBoundsException.class, NullPointerException.class})
     public String checkIfCanLogIn(String email, String password) {
         try {
             for(User user : users) {
@@ -61,8 +61,8 @@ public class UserList {
                     }
                 }
             }
-        } catch (Exception e) {
-            new ExceptionLog(e.getMessage(), e);
+        } catch (IllegalArgumentException e) {
+            exceptionLog.log(e);
             throw new IllegalArgumentException("Email or password in wrong format");
         }
             return "";
