@@ -25,8 +25,4 @@ public class StockhubApplication {
     public void afterInit() {
         LOGGER.info(httpConnection.toString());
     }
-
-
-
-
 }

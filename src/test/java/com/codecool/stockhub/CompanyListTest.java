@@ -22,14 +22,12 @@ public class CompanyListTest {
     @Test
     void testFilterDataWithWrongJSONInput() {
         String content = "{ foo : foo }";
-        assertThrows(JSONException.class, () -> companyList.filterData(content));
+        assertThrows(IllegalArgumentException.class, () -> companyList.filterData(content));
     }
 
     @Test
     void testFilterDataWithEmptyJSONInput() {
         String content = "";
-        assertThrows(JSONException.class, () -> companyList.filterData(content));
+        assertThrows(IllegalArgumentException.class, () -> companyList.filterData(content));
     }
-
-
 }
