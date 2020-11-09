@@ -1,7 +1,7 @@
 package com.codecool.stockhub.controller;
 
 import com.codecool.stockhub.logger.ExceptionLog;
-import com.codecool.stockhub.model.User;
+import com.codecool.stockhub.model.UserObject;
 import com.codecool.stockhub.service.UserList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,9 +23,9 @@ public class UserController {
 
     @CrossOrigin(origins = ORIGIN)
     @PostMapping(value = "/add")
-    public void addUser(@RequestBody User user, HttpServletResponse response) {
+    public void addUser(@RequestBody UserObject userObject, HttpServletResponse response) {
         try {
-            userList.registerUser(user);
+            userList.registerUser(userObject);
             response.setStatus(200);
 
         } catch (IllegalArgumentException e) {
@@ -40,7 +40,7 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public List<User> getUsers(HttpServletResponse response){
+    public List<UserObject> getUsers(HttpServletResponse response){
         try {
             response.setStatus(200);
             return userList.getUsers();

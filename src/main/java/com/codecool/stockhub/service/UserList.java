@@ -1,48 +1,55 @@
 package com.codecool.stockhub.service;
 
 import com.codecool.stockhub.logger.ExceptionLog;
-import com.codecool.stockhub.model.User;
+import com.codecool.stockhub.model.UserObject;
+import com.codecool.stockhub.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.LinkedList;
 import java.util.List;
 
 @Component
 public class UserList {
 
-    private final ExceptionLog exceptionLog = new ExceptionLog();
+    //private final ExceptionLog exceptionLog = new ExceptionLog();
 
-    private final List<User> users = new LinkedList<>();
-    private User loggedInUser;
+    @Autowired
+    private ExceptionLog exceptionLog;
 
-    public void registerUser(User user){
-        this.users.add(user);
+    @Autowired
+    private UserRepository userRepository;
+
+    //private final List<User> users = new LinkedList<>();
+    private UserObject loggedInUserObject;
+
+    public void registerUser(UserObject userObject){
+        userRepository.save(userObject);
     }
 
-    public List<User> getUsers() {
-        return users;
+    public List<UserObject> getUsers() {
+        return userRepository.findAll();
     }
 
-    public User getLoggedInUser() {
-        return loggedInUser;
+    public UserObject getLoggedInUser() {
+        return loggedInUserObject;
     }
 
-    public void setLoggedInUser(User loggedInUser) {
-        this.loggedInUser = loggedInUser;
+    public void setLoggedInUser(UserObject loggedInUserObject) {
+        this.loggedInUserObject = loggedInUserObject;
     }
 
-    public User getUserByEmail(String email) {
-        for (User user : users) {
-            if(user.getEmail().equals(email)) {
-                return user;
+    public UserObject getUserByEmail(String email) {
+        for (UserObject userObject : getUsers()) {
+            if(userObject.getEmail().equals(email)) {
+                return userObject;
             }
         }
-        return new User();
+        return new UserObject();
     }
 
     public boolean isUserExist(String email) {
-        for (User user : users) {
-            if (user.getEmail().equals(email)) {
+        for (UserObject userObject : getUsers()) {
+            if (userObject.getEmail().equals(email)) {
                 return true;
             }
         }
@@ -51,11 +58,11 @@ public class UserList {
 
     public String checkIfCanLogIn(String email, String password) {
         try {
-            for(User user : users) {
-                if (user.getEmail().equals(email)) {
-                    if (user.getPassword().equals(password)){
-                        setLoggedInUser(user);
-                        return user.getName();
+            for(UserObject userObject : getUsers()) {
+                if (userObject.getEmail().equals(email)) {
+                    if (userObject.getPassword().equals(password)){
+                        setLoggedInUser(userObject);
+                        return userObject.getName();
                     }
                 }
             }
