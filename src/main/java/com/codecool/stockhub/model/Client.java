@@ -34,4 +34,10 @@ public class UserObject {
     @GeneratedValue
     private Long id;
 
+//    @Singular
+//    @OneToMany(mappedBy = "userObject", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.LAZY)
+//    @EqualsAndHashCode.Exclude
+//    @ToString.Exclude
+//    private Set<Stock> stocks;
+
 }
