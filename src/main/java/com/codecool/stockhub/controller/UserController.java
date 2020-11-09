@@ -17,7 +17,9 @@ public class UserController {
 
     @Autowired
     private UserList userList;
-    private final ExceptionLog exceptionLog = new ExceptionLog();
+
+    @Autowired
+    private ExceptionLog exceptionLog;
 
     @CrossOrigin(origins = ORIGIN)
     @PostMapping(value = "/add")
