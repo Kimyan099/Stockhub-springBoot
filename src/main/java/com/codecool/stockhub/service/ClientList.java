@@ -1,52 +1,52 @@
 package com.codecool.stockhub.service;
 
 import com.codecool.stockhub.logger.ExceptionLog;
-import com.codecool.stockhub.model.UserObject;
-import com.codecool.stockhub.repository.UserRepository;
+import com.codecool.stockhub.model.Client;
+import com.codecool.stockhub.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
-public class UserList {
+public class ClientList {
 
     @Autowired
     private ExceptionLog exceptionLog;
 
     @Autowired
-    private UserRepository userRepository;
+    private ClientRepository clientRepository;
 
-    private UserObject loggedInUserObject;
+    private Client loggedInClient;
 
-    public void registerUser(UserObject userObject){
-        userRepository.save(userObject);
+    public void registerUser(Client client){
+        clientRepository.save(client);
     }
 
-    public List<UserObject> getUsers() {
-        return userRepository.findAll();
+    public List<Client> getUsers() {
+        return clientRepository.findAll();
     }
 
-    public UserObject getLoggedInUser() {
-        return loggedInUserObject;
+    public Client getLoggedInUser() {
+        return loggedInClient;
     }
 
-    public void setLoggedInUser(UserObject loggedInUserObject) {
-        this.loggedInUserObject = loggedInUserObject;
+    public void setLoggedInUser(Client loggedInClient) {
+        this.loggedInClient = loggedInClient;
     }
 
-    public UserObject getUserByEmail(String email) {
-        for (UserObject userObject : getUsers()) {
-            if(userObject.getEmail().equals(email)) {
-                return userObject;
+    public Client getUserByEmail(String email) {
+        for (Client client : getUsers()) {
+            if(client.getEmail().equals(email)) {
+                return client;
             }
         }
-        return new UserObject();
+        return new Client();
     }
 
     public boolean isUserExist(String email) {
-        for (UserObject userObject : getUsers()) {
-            if (userObject.getEmail().equals(email)) {
+        for (Client client : getUsers()) {
+            if (client.getEmail().equals(email)) {
                 return true;
             }
         }
@@ -55,11 +55,11 @@ public class UserList {
 
     public String checkIfCanLogIn(String email, String password) {
         try {
-            for(UserObject userObject : getUsers()) {
-                if (userObject.getEmail().equals(email)) {
-                    if (userObject.getPassword().equals(password)){
-                        setLoggedInUser(userObject);
-                        return userObject.getName();
+            for(Client client : getUsers()) {
+                if (client.getEmail().equals(email)) {
+                    if (client.getPassword().equals(password)){
+                        setLoggedInUser(client);
+                        return client.getName();
                     }
                 }
             }

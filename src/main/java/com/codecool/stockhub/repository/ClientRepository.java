@@ -1,7 +1,7 @@
 package com.codecool.stockhub.repository;
 
-import com.codecool.stockhub.model.UserObject;
+import com.codecool.stockhub.model.Client;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<UserObject, Long> {
+public interface ClientRepository extends JpaRepository<Client, Long> {
 }

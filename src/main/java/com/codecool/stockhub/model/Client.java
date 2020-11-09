@@ -1,14 +1,9 @@
 package com.codecool.stockhub.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 
 @Entity
@@ -16,7 +11,7 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserObject {
+public class Client {
 
     public static final double BALANCE = 5000;
 
@@ -34,10 +29,10 @@ public class UserObject {
     @GeneratedValue
     private Long id;
 
-//    @Singular
-//    @OneToMany(mappedBy = "userObject", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.LAZY)
-//    @EqualsAndHashCode.Exclude
-//    @ToString.Exclude
-//    private Set<Stock> stocks;
+    @Singular
+    @OneToMany(mappedBy = "client", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Set<Stock> stocks;
 
 }
