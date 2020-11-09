@@ -2,9 +2,7 @@ package com.codecool.stockhub.service;
 
 import com.codecool.stockhub.logger.ExceptionLog;
 import com.codecool.stockhub.model.User;
-import com.sun.el.stream.Optional;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.LinkedList;
 import java.util.List;
