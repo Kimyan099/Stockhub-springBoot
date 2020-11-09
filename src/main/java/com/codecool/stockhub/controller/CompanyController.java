@@ -2,10 +2,12 @@ package com.codecool.stockhub.controller;
 
 import com.codecool.stockhub.logger.ExceptionLog;
 import com.codecool.stockhub.model.Company;
+import com.codecool.stockhub.repository.CompanyRepository;
 import com.codecool.stockhub.service.CompanyList;
 import com.codecool.stockhub.service.HTTPConnection;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -19,28 +21,17 @@ public class CompanyController {
 
     private final ExceptionLog exceptionLog = new ExceptionLog();
     private static final String ORIGIN = "http://localhost:3000";
-    private static final String COMPANIES_URL = "https://finnhub.io/api/v1/stock/symbol?exchange=US&token=bu21mlf48v6u9tetnbt0";
 
     @Autowired
-    private HTTPConnection httpConnection;
+    private CompanyRepository companyRepository;
 
     @Autowired
     private CompanyList companyList;
 
-
     @CrossOrigin(origins = ORIGIN)
     @GetMapping("/companies")
     public List<Company> companyList(HttpServletResponse response) {
-        String jsonResponse = httpConnection.getContent(COMPANIES_URL);
-        try {
-            companyList.filterData(jsonResponse);
-            response.setStatus(200);
-            return companyList.getCompanies();
+        return companyRepository.findAll();
 
-        } catch (IllegalArgumentException e) {
-            response.setStatus(400);
-            exceptionLog.log(e);
-        }
-            return Collections.emptyList();
     }
 }

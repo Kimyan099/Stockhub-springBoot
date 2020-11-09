@@ -1,9 +1,15 @@
 package com.codecool.stockhub.logger;
 
-public class ExceptionLog {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.context.annotation.Configuration;
 
-    public ExceptionLog() {
-    }
+
+@Configuration
+@Data
+@NoArgsConstructor
+public class ExceptionLog {
 
     public void log(Exception e) {
         System.out.println(e);
