@@ -11,15 +11,12 @@ import java.util.List;
 @Component
 public class UserList {
 
-    //private final ExceptionLog exceptionLog = new ExceptionLog();
-
     @Autowired
     private ExceptionLog exceptionLog;
 
     @Autowired
     private UserRepository userRepository;
 
-    //private final List<User> users = new LinkedList<>();
     private UserObject loggedInUserObject;
 
     public void registerUser(UserObject userObject){
