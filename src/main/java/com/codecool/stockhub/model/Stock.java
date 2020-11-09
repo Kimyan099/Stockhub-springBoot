@@ -1,27 +1,31 @@
 package com.codecool.stockhub.model;
 
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Stock {
 
     private double price;
+
+    @Column(unique = true, nullable = false)
     private String symbol;
+
     private String name;
 
+    @Id
+    @GeneratedValue
+    private Long id;
 
-    public Stock(double price, String symbol, String name) {
-        this.price = price;
-        this.symbol = symbol;
-        this.name = name;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public String getSymbol() {
-        return symbol;
-    }
-
-    public String getName() {
-        return name;
-    }
+    @ManyToOne
+    private Client client;
 }
