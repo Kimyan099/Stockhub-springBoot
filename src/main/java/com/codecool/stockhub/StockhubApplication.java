@@ -5,6 +5,7 @@ import com.codecool.stockhub.model.Company;
 import com.codecool.stockhub.repository.CompanyRepository;
 import com.codecool.stockhub.service.CompanyList;
 import com.codecool.stockhub.service.HTTPConnection;
+import com.codecool.stockhub.service.NewsList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +26,15 @@ public class StockhubApplication {
 
     private static final String COMPANIES_URL = "https://finnhub.io/api/v1/stock/symbol?exchange=US&token=bu21mlf48v6u9tetnbt0";
 
+    private static final String NEWS_URL = "https://finnhub.io/api/v1/news?category=general&token=bu2rf9f48v6pqlhnnvtg";
+
     private static final Logger LOGGER = LoggerFactory.getLogger(StockhubApplication.class);
 
     @Autowired
     private CompanyList companyList;
+
+    @Autowired
+    private NewsList newsList;
 
     @Autowired
     private ExceptionLog exceptionLog;
@@ -45,10 +51,14 @@ public class StockhubApplication {
     @Profile("production")
     public CommandLineRunner init() {
 
+        String companiesJsonResponse = httpConnection.getContent(COMPANIES_URL);
+        String newsJsonResponse = httpConnection.getContent(NEWS_URL);
+
         return args -> {
-            String jsonResponse = httpConnection.getContent(COMPANIES_URL);
             try {
-                companyList.filterData(jsonResponse);
+                companyList.filterData(companiesJsonResponse);
+                newsList.getData(newsJsonResponse);
+
             } catch (IllegalArgumentException e) {
                 exceptionLog.log(e);
             }
