@@ -1,36 +1,50 @@
 package com.codecool.stockhub.service;
 
+import com.codecool.stockhub.logger.ExceptionLog;
 import com.codecool.stockhub.model.Company;
+import com.codecool.stockhub.repository.CompanyRepository;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.LinkedList;
 import java.util.List;
 
-@Component
+
+@Service
+
 public class CompanyList {
 
-    private List<Company> companies = new LinkedList<>();
-
-    public List<Company> getCompanies() {
-        return companies;
-    }
+    @Autowired
+    private CompanyRepository companyRepository;
 
 
-    public void filterData(String content) throws JSONException {
+    private final ExceptionLog exceptionLog = new ExceptionLog();
 
-        JSONArray contentJsonArray = new JSONArray(content);
 
-        for (int i = 0; i < contentJsonArray.length(); i++) {
-            Company company = new Company();
-            JSONObject currentJsonObject = contentJsonArray.getJSONObject(i);
+    public void filterData(String content) {
 
-            company.setSymbol(currentJsonObject.getString("symbol"));
-            company.setDescription(currentJsonObject.getString("description"));
-            companies.add(company);
+        int length = 200;
+        try {
+            JSONArray contentJsonArray = new JSONArray(content);
+
+            for (int i = 0; i < length; i++) {
+
+                JSONObject currentJsonObject = contentJsonArray.getJSONObject(i);
+
+                Company company = Company.builder()
+                        .description(currentJsonObject.getString("description"))
+                        .symbol(currentJsonObject.getString("symbol"))
+                        .build();
+                companyRepository.save(company);
+            }
+        } catch (JSONException e) {
+            exceptionLog.log(e);
+            throw new IllegalArgumentException("Content format is not valid");
         }
     }
-
 }

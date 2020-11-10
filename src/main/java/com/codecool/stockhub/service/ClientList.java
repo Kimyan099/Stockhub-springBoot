@@ -1,0 +1,72 @@
+package com.codecool.stockhub.service;
+
+import com.codecool.stockhub.logger.ExceptionLog;
+import com.codecool.stockhub.model.Client;
+import com.codecool.stockhub.repository.ClientRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+
+@Component
+public class ClientList {
+
+    @Autowired
+    private ExceptionLog exceptionLog;
+
+    @Autowired
+    private ClientRepository clientRepository;
+
+    private Client loggedInClient;
+
+    public void registerUser(Client client){
+        clientRepository.save(client);
+    }
+
+    public List<Client> getUsers() {
+        return clientRepository.findAll();
+    }
+
+    public Client getLoggedInUser() {
+        return loggedInClient;
+    }
+
+    public void setLoggedInUser(Client loggedInClient) {
+        this.loggedInClient = loggedInClient;
+    }
+
+    public Client getUserByEmail(String email) {
+        for (Client client : getUsers()) {
+            if(client.getEmail().equals(email)) {
+                return client;
+            }
+        }
+        return new Client();
+    }
+
+    public boolean isUserExist(String email) {
+        for (Client client : getUsers()) {
+            if (client.getEmail().equals(email)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public String checkIfCanLogIn(String email, String password) {
+        try {
+            for(Client client : getUsers()) {
+                if (client.getEmail().equals(email)) {
+                    if (client.getPassword().equals(password)){
+                        setLoggedInUser(client);
+                        return client.getName();
+                    }
+                }
+            }
+        } catch (IllegalArgumentException e) {
+            exceptionLog.log(e);
+            throw new IllegalArgumentException("Email or password in wrong format");
+        }
+            return "";
+    }
+}
