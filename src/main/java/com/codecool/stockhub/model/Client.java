@@ -35,4 +35,7 @@ public class Client {
     @ToString.Exclude
     private Set<Stock> stocks;
 
+    public void addToStock(Stock stock) {
+        stocks.add(stock);
+    }
 }
