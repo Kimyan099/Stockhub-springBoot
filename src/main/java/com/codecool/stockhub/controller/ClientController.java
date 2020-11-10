@@ -3,6 +3,7 @@ package com.codecool.stockhub.controller;
 import com.codecool.stockhub.logger.ExceptionLog;
 import com.codecool.stockhub.model.Client;
 import com.codecool.stockhub.model.Stock;
+import com.codecool.stockhub.repository.StockRepository;
 import com.codecool.stockhub.service.ClientList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,8 @@ public class ClientController {
     @Autowired
     private ClientList clientList;
 
+    @Autowired
+    StockRepository stockRepository;
 
     @Autowired
     private ExceptionLog exceptionLog;
@@ -92,8 +95,12 @@ public class ClientController {
         try {
             response.setHeader("Access-Control-Allow-Origin", "*");
             Client client = clientList.getLoggedInUser();
-            client.addToStock(stock);
+            stock.setClient(client);
+//            stockRepository.save(stock);
+            System.out.println(client);
+            System.out.println("backend");
             System.out.println(stock);
+
 
 
 

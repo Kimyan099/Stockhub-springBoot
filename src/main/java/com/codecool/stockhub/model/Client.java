@@ -1,8 +1,11 @@
 package com.codecool.stockhub.model;
 
+import com.codecool.stockhub.repository.StockRepository;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -12,6 +15,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 public class Client {
+
 
     public static final double BALANCE = 5000;
 
@@ -30,12 +34,13 @@ public class Client {
     private Long id;
 
     @Singular
-    @OneToMany(mappedBy = "client", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "client", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Set<Stock> stocks;
 
     public void addToStock(Stock stock) {
         stocks.add(stock);
+        System.out.println(stocks);
     }
 }
