@@ -23,6 +23,10 @@ public class ClientList {
         clientRepository.save(client);
     }
 
+    public void updateClient(Client client){
+        clientRepository.saveAndFlush(client);
+    }
+
     public List<Client> getUsers() {
         return clientRepository.findAll();
     }

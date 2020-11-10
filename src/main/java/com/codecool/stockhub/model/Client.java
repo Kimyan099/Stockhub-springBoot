@@ -1,11 +1,9 @@
 package com.codecool.stockhub.model;
 
-import com.codecool.stockhub.repository.StockRepository;
 import lombok.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 
@@ -13,19 +11,20 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
+@DynamicUpdate
 public class Client {
 
 
     public static final double BALANCE = 5000;
 
-    @Column(nullable = false)
+    //@Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    //@Column(nullable = false)
     private String password;
 
-    @Column(unique = true, nullable = false)
+    //@Column(unique = true, nullable = false)
     private String email;
     private double balance = BALANCE;
 
@@ -38,9 +37,4 @@ public class Client {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Set<Stock> stocks;
-
-    public void addToStock(Stock stock) {
-        stocks.add(stock);
-        System.out.println(stocks);
-    }
 }

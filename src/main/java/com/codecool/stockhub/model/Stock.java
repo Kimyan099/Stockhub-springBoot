@@ -17,7 +17,7 @@ public class Stock {
 
     private double price;
 
-    @Column(unique = true, nullable = false)
+    //@Column(unique = true, nullable = false)
     private String symbol;
 
     private String name;
