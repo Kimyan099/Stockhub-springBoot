@@ -1,5 +1,6 @@
 package com.codecool.stockhub.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -36,5 +37,6 @@ public class Client {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "client", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
+    @JsonManagedReference
     private Set<Stock> stocks;
 }
