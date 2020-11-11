@@ -9,9 +9,6 @@ import java.util.List;
 
 public interface StockRepository extends JpaRepository<Stock, Long> {
 
-    //public List<Stock> getStocksByClient(Client client);
-
-    //public List<Stock> getStocksByClient_Email(String email);
     public List<Stock> getStocksByClient_Id(Long id);
 
     @Query(value="select s from Stock s where s.client.id= :id")

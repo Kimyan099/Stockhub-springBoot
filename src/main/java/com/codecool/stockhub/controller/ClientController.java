@@ -126,12 +126,27 @@ public class ClientController {
     @CrossOrigin(origins = ORIGIN)
     @GetMapping("/client/active")
     public List<Stock> getActiveClientStocks(HttpServletResponse response){
-        return stockRepository.getStocksByLoggedInClient(clientList.getLoggedInUser().getId());
+        try {
+            response.setStatus(200);
+            return stockRepository.getStocksByLoggedInClient(clientList.getLoggedInUser().getId());
+        } catch (IllegalArgumentException e) {
+            response.setStatus(400);
+            exceptionLog.log(e);
+            throw new IllegalArgumentException();
+        }
     }
 
     @CrossOrigin(origins = ORIGIN)
     @GetMapping("/client/{id}")
     public List<Stock> getClientStocks(@PathVariable Long id, HttpServletResponse response){
-        return stockRepository.getStocksByClient_Id(id);
+        try {
+            response.setStatus(200);
+            return stockRepository.getStocksByClient_Id(id);
+        } catch (IllegalArgumentException e) {
+            response.setStatus(400);
+            exceptionLog.log(e);
+            throw new IllegalArgumentException("Invalid id!");
+        }
+
     }
 }
