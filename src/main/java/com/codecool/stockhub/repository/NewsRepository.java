@@ -10,8 +10,24 @@ import java.util.List;
 
 public interface NewsRepository extends JpaRepository<News, Long> {
 
-    @Query("FROM News WHERE category LIKE :categoryName")
+    @Query("FROM News ORDER BY datetime DESC")
     @Modifying(clearAutomatically = true)
-    List<News> getNewsByCategory(@Param("categoryName") String categoryName);
+    List<News> getAllNewsDESC();
+
+    @Query("FROM News ORDER BY datetime ASC")
+    @Modifying(clearAutomatically = true)
+    List<News> getAllNewsASC();
+
+    @Query("FROM News WHERE category = :categoryName ORDER BY datetime DESC")
+    @Modifying(clearAutomatically = true)
+    List<News> getNewsByCategoryDESC(@Param("categoryName") String categoryName);
+
+    @Query("FROM News WHERE category = :categoryName ORDER BY datetime ASC")
+    @Modifying(clearAutomatically = true)
+    List<News> getNewsByCategoryASC(@Param("categoryName") String categoryName);
+
+    @Query("SELECT DISTINCT category FROM News")
+    @Modifying(clearAutomatically = true)
+    List<String> getAllNewsCategories();
 
 }
