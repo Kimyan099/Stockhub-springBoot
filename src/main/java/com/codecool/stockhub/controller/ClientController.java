@@ -18,8 +18,7 @@ import java.util.Set;
 @RestController
 public class ClientController {
 
-    //private static final String ORIGIN = "http://localhost:3000";
-    private static final String ORIGIN = "*";
+    private static final String ORIGIN = "http://localhost:3000";
 
     @Autowired
     private ClientList clientList;
@@ -110,19 +109,7 @@ public class ClientController {
             stocks.add(stock);
             client.setStocks(stocks);
             clientList.registerUser(client);
-//            client = Client.builder()
-//                    .stock(stock)
-//                    .build();
-//
-//            clientList.registerUser(client);
-//            stockRepository.save(stock);
-            //client.addToStock(stock);
             System.out.println(client);
-            System.out.println("backend");
-//            System.out.println(stock);
-
-
-
 
         } catch (IllegalArgumentException e) {
             response.setStatus(400);
