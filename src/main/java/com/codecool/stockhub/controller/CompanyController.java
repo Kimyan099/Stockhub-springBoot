@@ -2,6 +2,7 @@ package com.codecool.stockhub.controller;
 
 import com.codecool.stockhub.logger.ExceptionLog;
 import com.codecool.stockhub.model.Company;
+import com.codecool.stockhub.model.Stock;
 import com.codecool.stockhub.repository.CompanyRepository;
 import com.codecool.stockhub.service.CompanyList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,4 +32,21 @@ public class CompanyController {
         return companyRepository.findAll();
 
     }
+
+    @CrossOrigin(origins = ORIGIN)
+    @GetMapping("/companies/{symbol}")
+    public String companyBySymbol(@PathVariable String symbol, HttpServletResponse response) {
+        try {
+            response.setStatus(200);
+
+            return companyRepository.getCompanyBySymbol(symbol).getSymbol();
+
+        } catch (IllegalArgumentException e) {
+            response.setStatus(400);
+            exceptionLog.log(e);
+            throw new IllegalArgumentException("Invalid id!");
+        }
+
+    }
 }
+

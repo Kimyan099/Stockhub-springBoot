@@ -48,8 +48,10 @@ public class StockhubApplication {
         return args -> {
             Stock apple = Stock.builder()
                     .price(100)
-                    .symbol("aapl")
+                    .symbol("AAPL")
                     .name("Apple")
+                    .amount(200)
+                    .imageLink("https://static.finnhub.io/logo/87cb30d8-80df-11ea-8951-00000000092a.png")
                     .build();
 
             Client admin = Client.builder()

@@ -26,6 +26,10 @@ public class Stock {
 
     private String name;
 
+    private String imageLink;
+
+    private int amount;
+
     @Id
     @GeneratedValue
     private Long id;
