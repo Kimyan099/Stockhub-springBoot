@@ -18,7 +18,8 @@ import java.util.Set;
 @RestController
 public class ClientController {
 
-    private static final String ORIGIN = "http://localhost:3000";
+    //private static final String ORIGIN = "http://localhost:3000";
+    private static final String ORIGIN = "*";
 
     @Autowired
     private ClientList clientList;
@@ -120,5 +121,32 @@ public class ClientController {
             response.setStatus(400);
             throw new NullPointerException("User not created");
         }
+    }
+
+    @CrossOrigin(origins = ORIGIN)
+    @GetMapping("/client/active")
+    public List<Stock> getActiveClientStocks(HttpServletResponse response){
+        try {
+            response.setStatus(200);
+            return stockRepository.getStocksByLoggedInClient(clientList.getLoggedInUser().getId());
+        } catch (IllegalArgumentException e) {
+            response.setStatus(400);
+            exceptionLog.log(e);
+            throw new IllegalArgumentException();
+        }
+    }
+
+    @CrossOrigin(origins = ORIGIN)
+    @GetMapping("/client/{id}")
+    public List<Stock> getClientStocks(@PathVariable Long id, HttpServletResponse response){
+        try {
+            response.setStatus(200);
+            return stockRepository.getStocksByClient_Id(id);
+        } catch (IllegalArgumentException e) {
+            response.setStatus(400);
+            exceptionLog.log(e);
+            throw new IllegalArgumentException("Invalid id!");
+        }
+
     }
 }
