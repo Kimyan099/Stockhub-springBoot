@@ -29,6 +29,10 @@ public class Client {
     private String email;
     private double balance = BALANCE;
 
+    private String address;
+    private String phoneNumber;
+    private String mobileNumber;
+
     @Id
     @GeneratedValue
     private Long id;
