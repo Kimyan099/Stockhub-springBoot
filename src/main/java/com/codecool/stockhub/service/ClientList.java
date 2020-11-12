@@ -57,13 +57,13 @@ public class ClientList {
         return false;
     }
 
-    public String checkIfCanLogIn(String email, String password) {
+    public Client checkIfCanLogIn(String email, String password) {
         try {
             for(Client client : getUsers()) {
                 if (client.getEmail().equals(email)) {
                     if (client.getPassword().equals(password)){
                         setLoggedInUser(client);
-                        return client.getName();
+                        return client;
                     }
                 }
             }
@@ -71,6 +71,6 @@ public class ClientList {
             exceptionLog.log(e);
             throw new IllegalArgumentException("Email or password in wrong format");
         }
-            return "";
+            return null;
     }
 }

@@ -84,11 +84,57 @@ public class ClientController {
     }
 
     @CrossOrigin(origins = ORIGIN)
-    @PostMapping(value = "/login")
-    public String update(String email, String password, HttpServletResponse response) {
+    @PostMapping(value = "/active/set-phone-number")
+    public void setPhoneNumber(String phoneNumber, HttpServletResponse response) {
         try {
             response.setStatus(200);
-            return clientList.checkIfCanLogIn(email, password);
+            Client client = clientList.getLoggedInUser();
+            client.setPhoneNumber(phoneNumber);
+            clientList.updateClient(client);
+        } catch (IllegalArgumentException e) {
+            response.setStatus(400);
+            exceptionLog.log(e);
+            throw new IllegalArgumentException("Phone number in invalid format");
+        }
+    }
+
+    @CrossOrigin(origins = ORIGIN)
+    @PostMapping(value = "/active/set-mobile-number")
+    public void setMobileNumber(String mobileNumber, HttpServletResponse response) {
+        try {
+            response.setStatus(200);
+            Client client = clientList.getLoggedInUser();
+            client.setMobileNumber(mobileNumber);
+            clientList.updateClient(client);
+        } catch (IllegalArgumentException e) {
+            response.setStatus(400);
+            exceptionLog.log(e);
+            throw new IllegalArgumentException("Mobile number in invalid format");
+        }
+    }
+
+    @CrossOrigin(origins = ORIGIN)
+    @PostMapping(value = "/active/set-address")
+    public void setAddress(String address, HttpServletResponse response) {
+        try {
+            response.setStatus(200);
+            Client client = clientList.getLoggedInUser();
+            client.setAddress(address);
+            clientList.updateClient(client);
+        } catch (IllegalArgumentException e) {
+            response.setStatus(400);
+            exceptionLog.log(e);
+            throw new IllegalArgumentException("Mobile number in invalid format");
+        }
+    }
+
+    @CrossOrigin(origins = ORIGIN)
+    @PostMapping(value = "/login")
+    public Client update(String email, String password, HttpServletResponse response) {
+        try {
+            response.setStatus(200);
+            Client client = clientList.checkIfCanLogIn(email, password);
+            return client;
         } catch (IllegalArgumentException e) {
             response.setStatus(400);
             exceptionLog.log(e);
