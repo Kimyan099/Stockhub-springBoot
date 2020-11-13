@@ -1,6 +1,5 @@
 package com.codecool.stockhub.model;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,13 +14,19 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Company {
+public class News {
 
     @Id
     @GeneratedValue
     private Long id;
 
-    private String description;
+    private String headline;
 
-    private String symbol;
+    private String category;
+
+    private String image;
+
+    private String datetime;
+
+    private String source;
 }

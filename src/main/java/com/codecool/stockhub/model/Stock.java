@@ -1,27 +1,40 @@
 package com.codecool.stockhub.model;
 
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Stock {
 
     private double price;
+
+    //@Column(unique = true, nullable = false)
     private String symbol;
+
     private String name;
 
+    private String imageLink;
 
-    public Stock(double price, String symbol, String name) {
-        this.price = price;
-        this.symbol = symbol;
-        this.name = name;
-    }
+    private int amount;
 
-    public double getPrice() {
-        return price;
-    }
+    @Id
+    @GeneratedValue
+    private Long id;
 
-    public String getSymbol() {
-        return symbol;
-    }
-
-    public String getName() {
-        return name;
-    }
+    @ManyToOne
+    @JsonBackReference
+    private Client client;
 }
