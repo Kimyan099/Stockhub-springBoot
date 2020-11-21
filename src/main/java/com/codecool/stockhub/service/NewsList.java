@@ -33,6 +33,7 @@ public class NewsList {
                         .image(currentObj.getString("image"))
                         .datetime(currentObj.getString("datetime"))
                         .source(currentObj.getString("source"))
+                        .url(currentObj.getString("url"))
                         .build();
 
                 newsRepository.save(news);

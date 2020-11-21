@@ -29,4 +29,6 @@ public class News {
     private String datetime;
 
     private String source;
+
+    private String url;
 }
