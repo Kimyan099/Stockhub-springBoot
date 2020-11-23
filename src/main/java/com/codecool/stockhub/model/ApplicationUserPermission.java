@@ -2,7 +2,8 @@ package com.codecool.stockhub.model;
 
 public enum ApplicationUserPermission {
 
-    ADMIN_READ("admin:read");
+    ADMIN_READ("admin:read"),
+    CLIENT_READ("client:read");
 
     private String permission;
 
