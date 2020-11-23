@@ -18,6 +18,8 @@ import org.springframework.context.annotation.Profile;
 
 import javax.annotation.PostConstruct;
 
+import static com.codecool.stockhub.model.ApplicationUserRole.ADMIN;
+
 @SpringBootApplication
 public class StockhubApplication {
 
@@ -64,6 +66,7 @@ public class StockhubApplication {
                     .name("admin")
                     .email("admin@gmail.com")
                     .password("123")
+                    .authorities(ADMIN.getGrantedAuthorities())
                     .stock(apple)
                     .build();
 
