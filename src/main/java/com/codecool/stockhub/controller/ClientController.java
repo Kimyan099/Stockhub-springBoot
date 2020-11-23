@@ -9,6 +9,7 @@ import com.codecool.stockhub.service.ClientList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashSet;
 import java.util.List;
@@ -33,9 +34,9 @@ public class ClientController {
     @Autowired
     private ExceptionLog exceptionLog;
 
-    @CrossOrigin(origins = ORIGIN)
+    @CrossOrigin(origins = ORIGIN, allowCredentials = "true")
     @PostMapping(value = "/add")
-    public void addUser(@RequestBody Client client, HttpServletResponse response) {
+    public void addUser(@RequestBody Client client, HttpServletResponse response, HttpServletRequest request) {
         try {
             clientList.registerUser(client);
             response.setStatus(200);
