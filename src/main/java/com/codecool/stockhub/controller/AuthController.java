@@ -37,7 +37,7 @@ public class AuthController {
     @PostMapping("/signin")
     public ResponseEntity signin(@RequestBody UserCredentials data) {
         try {
-            String username = data.getUsername();
+            String username = data.getEmail();
             // authenticationManager.authenticate calls loadUserByUsername in CustomUserDetailsService
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, data.getPassword()));
             List<String> authorities = authentication.getAuthorities()
