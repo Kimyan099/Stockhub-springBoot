@@ -73,7 +73,7 @@ public class ClientList {
         try {
             for(Client client : getUsers()) {
                 if (client.getEmail().equals(email)) {
-                    if (client.getPassword().equals(password)){
+                    if (passwordEncoder.matches(password, client.getPassword())){
                         setLoggedInUser(client);
                         return client;
                     }
