@@ -15,8 +15,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.annotation.PostConstruct;
+
+import static com.codecool.stockhub.model.ApplicationUserRole.ADMIN;
 
 @SpringBootApplication
 public class StockhubApplication {
@@ -42,6 +46,12 @@ public class StockhubApplication {
     @Autowired
     private ClientRepository clientRepository;
 
+    private final PasswordEncoder passwordEncoder;
+
+    public StockhubApplication() {
+        this.passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
+
 
     public static void main(String[] args) {
         SpringApplication.run(StockhubApplication.class, args);
@@ -63,7 +73,8 @@ public class StockhubApplication {
             Client admin = Client.builder()
                     .name("admin")
                     .email("admin@gmail.com")
-                    .password("123")
+                    .password(passwordEncoder.encode("admin"))
+                    .authorities(ADMIN.getGrantedAuthorities())
                     .stock(apple)
                     .build();
 

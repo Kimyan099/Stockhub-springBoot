@@ -2,11 +2,13 @@ package com.codecool.stockhub.controller;
 
 import com.codecool.stockhub.logger.ExceptionLog;
 import com.codecool.stockhub.model.Company;
-import com.codecool.stockhub.model.Stock;
 import com.codecool.stockhub.repository.CompanyRepository;
 import com.codecool.stockhub.service.CompanyList;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -15,7 +17,8 @@ import java.util.List;
 @RestController
 public class CompanyController {
 
-    private static final String ORIGIN = "http://localhost:3000";
+//    private static final String ORIGIN = "http://localhost:3000";
+    private static final String ORIGIN = "*";
 
     @Autowired
     private ExceptionLog exceptionLog;
