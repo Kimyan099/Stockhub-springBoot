@@ -2,7 +2,7 @@ package com.codecool.stockhub.controller;
 
 import com.codecool.stockhub.logger.ExceptionLog;
 import com.codecool.stockhub.model.Client;
-import com.codecool.stockhub.model.PhoneNumberCredentials;
+import com.codecool.stockhub.model.ProfileDetailCredential;
 import com.codecool.stockhub.model.Stock;
 import com.codecool.stockhub.model.UserCredentials;
 import com.codecool.stockhub.repository.ClientRepository;
@@ -152,10 +152,9 @@ public class ClientController {
 
     @CrossOrigin(origins = ORIGIN, allowCredentials = "true")
     @PostMapping(value = "/active/set-phone-number")
-    public void setPhoneNumber(@RequestBody PhoneNumberCredentials credentials, HttpServletResponse response) {
+    public void setPhoneNumber(@RequestBody ProfileDetailCredential credentials, HttpServletResponse response) {
         try {
-            String phoneNumber = credentials.getPhoneNumber();
-            response.setStatus(200);
+            String phoneNumber = credentials.getDetail();
             Client client = clientList.getLoggedInUser();
             client.setPhoneNumber(phoneNumber);
             clientList.updateClient(client);
@@ -164,13 +163,14 @@ public class ClientController {
             exceptionLog.log(e);
             throw new IllegalArgumentException("Phone number in invalid format");
         }
+        response.setStatus(200);
     }
 
-    @CrossOrigin(origins = ORIGIN)
+    @CrossOrigin(origins = ORIGIN, allowCredentials = "true")
     @PostMapping(value = "/active/set-mobile-number")
-    public void setMobileNumber(String mobileNumber, HttpServletResponse response) {
+    public void setMobileNumber(@RequestBody ProfileDetailCredential credentials, HttpServletResponse response) {
         try {
-            response.setStatus(200);
+            String mobileNumber = credentials.getDetail();
             Client client = clientList.getLoggedInUser();
             client.setMobileNumber(mobileNumber);
             clientList.updateClient(client);
@@ -179,21 +179,23 @@ public class ClientController {
             exceptionLog.log(e);
             throw new IllegalArgumentException("Mobile number in invalid format");
         }
+        response.setStatus(200);
     }
 
-    @CrossOrigin(origins = ORIGIN)
+    @CrossOrigin(origins = ORIGIN, allowCredentials = "true")
     @PostMapping(value = "/active/set-address")
-    public void setAddress(String address, HttpServletResponse response) {
+    public void setAddress(@RequestBody ProfileDetailCredential credentials, HttpServletResponse response) {
         try {
-            response.setStatus(200);
+            String address = credentials.getDetail();
             Client client = clientList.getLoggedInUser();
             client.setAddress(address);
             clientList.updateClient(client);
         } catch (IllegalArgumentException e) {
             response.setStatus(400);
             exceptionLog.log(e);
-            throw new IllegalArgumentException("Mobile number in invalid format");
+            throw new IllegalArgumentException("Address number in invalid format");
         }
+        response.setStatus(200);
     }
 
     @CrossOrigin(origins = ORIGIN)
