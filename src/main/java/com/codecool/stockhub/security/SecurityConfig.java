@@ -44,6 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/companies").permitAll()
                 .antMatchers(HttpMethod.GET, "/symbol").permitAll()
                 .antMatchers(HttpMethod.GET, "/news/**").permitAll()
+                .antMatchers(HttpMethod.GET,"/stocks").permitAll()
                 .anyRequest().denyAll()
                 .and()
                 .addFilterBefore(new JwtTokenFilter(jwtTokenServices), UsernamePasswordAuthenticationFilter.class)
