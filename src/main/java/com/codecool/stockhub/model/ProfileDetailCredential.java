@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PhoneNumberCredentials {
-    private String phoneNumber;
+public class ProfileDetailCredential {
+    private String detail;
 }
