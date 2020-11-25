@@ -27,27 +27,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .httpBasic().disable()
+                .cors()
+                .and()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/").permitAll()
-                .antMatchers(HttpMethod.OPTIONS,"/login").permitAll()
-                .antMatchers(HttpMethod.POST,"/login").permitAll()
-                .antMatchers(HttpMethod.POST,"/auth/signin").permitAll()
-                .antMatchers(HttpMethod.OPTIONS, "/add").permitAll()
+                .antMatchers(HttpMethod.POST, "/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/add").permitAll()
                 .antMatchers(HttpMethod.GET, "/users").hasAuthority(ApplicationUserPermission.ADMIN_READ.getPermission())
                 .antMatchers(HttpMethod.POST, "/user").permitAll()
-                .antMatchers(HttpMethod.POST,"/active/**").hasAuthority(CLIENT_READ.getPermission())
+                .antMatchers(HttpMethod.POST, "/active/**").hasAnyAuthority(CLIENT_READ.getPermission())
                 .antMatchers(HttpMethod.POST, "/buy").hasAuthority(CLIENT_READ.getPermission())
-                .antMatchers(HttpMethod.GET,"/client/**").hasAuthority(CLIENT_READ.getPermission())
+                .antMatchers(HttpMethod.GET, "/client/**").hasAuthority(CLIENT_READ.getPermission())
                 .antMatchers(HttpMethod.GET, "/companies").permitAll()
                 .antMatchers(HttpMethod.GET, "/symbol").permitAll()
                 .antMatchers(HttpMethod.GET, "/news/**").permitAll()
                 .anyRequest().denyAll()
                 .and()
-                .addFilterBefore(new JwtTokenFilter(jwtTokenServices), UsernamePasswordAuthenticationFilter.class); // anything else is denied
+                .addFilterBefore(new JwtTokenFilter(jwtTokenServices), UsernamePasswordAuthenticationFilter.class)
+        ;
     }
 
     @Bean
