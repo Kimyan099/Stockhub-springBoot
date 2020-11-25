@@ -1,10 +1,7 @@
 package com.codecool.stockhub.controller;
 
 import com.codecool.stockhub.logger.ExceptionLog;
-import com.codecool.stockhub.model.Client;
-import com.codecool.stockhub.model.ProfileDetailCredential;
-import com.codecool.stockhub.model.Stock;
-import com.codecool.stockhub.model.UserCredentials;
+import com.codecool.stockhub.model.*;
 import com.codecool.stockhub.repository.ClientRepository;
 import com.codecool.stockhub.repository.StockRepository;
 import com.codecool.stockhub.security.JwtTokenServices;
@@ -23,12 +20,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.codecool.stockhub.model.ApplicationUserRole.CLIENT;
+
 
 @RestController
 public class ClientController {
 
-    //private static final String ORIGIN = "http://localhost:3000";
-    private static final String ORIGIN = "*";
+    private static final String ORIGIN = "http://localhost:3000";
 
     @Autowired
     private ClientList clientList;
@@ -54,14 +52,10 @@ public class ClientController {
     @CrossOrigin(origins = ORIGIN, allowCredentials = "true")
     @PostMapping(value = "/login")
     public ResponseEntity update(@RequestBody UserCredentials data, HttpServletResponse response) {
-        System.out.println(data);
         try {
             String email = data.getEmail();
             String password = data.getPassword();
             Client client = clientList.checkIfCanLogIn(email, password);
-
-            //Generate jwt
-            // authenticationManager.authenticate calls loadUserByUsername in CustomUserDetailsService
 
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));
             List<String> authorities = authentication.getAuthorities()
@@ -71,13 +65,9 @@ public class ClientController {
 
             String token = jwtTokenServices.createToken(password, authorities);
 
-           // Cookie cookie2 = (Cookie) ResponseCookie.from("Authorization", token).httpOnly(true).build();
-
-
             Cookie cookie = new Cookie("token", token);
             cookie.setHttpOnly(true);
             response.addCookie(cookie);
-
 
             Map<Object, Object> model = new HashMap<>();
             model.put("email", email);
@@ -90,8 +80,6 @@ public class ClientController {
             response.setStatus(200);
 
             return ResponseEntity.ok(model);
-
-            //return client;
         } catch (IllegalArgumentException e) {
             response.setStatus(400);
             exceptionLog.log(e);
@@ -103,6 +91,7 @@ public class ClientController {
     @PostMapping(value = "/add")
     public void addUser(@RequestBody Client client, HttpServletResponse response, HttpServletRequest request) {
         try {
+            client.setAuthorities(CLIENT.getGrantedAuthorities());
             clientList.registerUser(client);
             response.setStatus(200);
         } catch (IllegalArgumentException e) {
@@ -116,18 +105,15 @@ public class ClientController {
         }
     }
 
-
     @GetMapping("/users")
     public List<Client> getUsers(HttpServletResponse response){
         try {
             response.setStatus(200);
             return clientList.getUsers();
-
         } catch (IllegalArgumentException e) {
             response.setStatus(400);
             exceptionLog.log(e);
             throw new IllegalArgumentException("Illegal arguments in user list");
-
         } catch (IndexOutOfBoundsException e) {
             response.setStatus(400);
             exceptionLog.log(e);
@@ -135,13 +121,12 @@ public class ClientController {
         }
     }
 
-    @CrossOrigin(origins = ORIGIN)
+    @CrossOrigin(origins = ORIGIN,  allowCredentials = "true")
     @PostMapping(value = "/user")
     public boolean isUserExist(String email, HttpServletResponse response) {
         try {
             response.setStatus(200);
             return clientList.isUserExist(email);
-
         } catch (IllegalArgumentException e) {
             response.setStatus(400);
             exceptionLog.log(e);
@@ -198,18 +183,23 @@ public class ClientController {
         response.setStatus(200);
     }
 
-    @CrossOrigin(origins = ORIGIN)
+    @CrossOrigin(origins = ORIGIN, allowCredentials = "true")
     @PostMapping(value = "/buy")
-    public void buyStock(@RequestBody Stock stock, HttpServletResponse response) {
+    public void buyStock(@RequestBody StockCredential stock, HttpServletResponse response) {
         try {
-            response.setHeader("Access-Control-Allow-Origin", "*");
+            Stock currentStock = Stock.builder()
+                    .imageLink(stock.getImageLink())
+                    .name(stock.getName())
+                    .price(stock.getPrice())
+                    .symbol(stock.getSymbol())
+                    .build();
             System.out.println(stock);
             Client client = clientList.getLoggedInUser();
 
             Set<Stock> stocks = new HashSet<>();
-            stock.setClient(client);
-            stockRepository.saveAndFlush(stock);
-            stocks.add(stock);
+            currentStock.setClient(client);
+            stockRepository.saveAndFlush(currentStock);
+            stocks.add(currentStock);
             client.setStocks(stocks);
             clientList.registerUser(client);
             System.out.println(client);
@@ -225,7 +215,7 @@ public class ClientController {
         }
     }
 
-    @CrossOrigin(origins = ORIGIN)
+    @CrossOrigin(origins = ORIGIN,  allowCredentials = "true")
     @GetMapping("/client/active")
     public List<Stock> getActiveClientStocks(HttpServletResponse response){
         try {
@@ -238,7 +228,7 @@ public class ClientController {
         }
     }
 
-    @CrossOrigin(origins = ORIGIN)
+    @CrossOrigin(origins = ORIGIN,  allowCredentials = "true")
     @GetMapping("/client/{id}")
     public List<Stock> getClientStocks(@PathVariable Long id, HttpServletResponse response){
         try {
