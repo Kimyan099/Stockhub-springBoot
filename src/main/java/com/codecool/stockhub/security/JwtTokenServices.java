@@ -54,10 +54,12 @@ public class JwtTokenServices {
     String getTokenFromRequest(HttpServletRequest req) {
         Cookie[] cookies = req.getCookies();
         String tokenValue = "";
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("token")){
-                tokenValue = cookie.getValue();
-                return tokenValue;
+        if (cookies != null){
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("token")){
+                    tokenValue = cookie.getValue();
+                    return tokenValue;
+                }
             }
         }
         return tokenValue;
