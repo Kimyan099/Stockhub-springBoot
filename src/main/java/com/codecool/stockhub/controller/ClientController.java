@@ -2,6 +2,7 @@ package com.codecool.stockhub.controller;
 
 import com.codecool.stockhub.logger.ExceptionLog;
 import com.codecool.stockhub.model.Client;
+import com.codecool.stockhub.model.PhoneNumberCredentials;
 import com.codecool.stockhub.model.Stock;
 import com.codecool.stockhub.model.UserCredentials;
 import com.codecool.stockhub.repository.ClientRepository;
@@ -69,6 +70,9 @@ public class ClientController {
                     .collect(Collectors.toList());
 
             String token = jwtTokenServices.createToken(password, authorities);
+
+           // Cookie cookie2 = (Cookie) ResponseCookie.from("Authorization", token).httpOnly(true).build();
+
 
             Cookie cookie = new Cookie("token", token);
             cookie.setHttpOnly(true);
@@ -145,10 +149,12 @@ public class ClientController {
         }
     }
 
-    @CrossOrigin(origins = ORIGIN)
+
+    @CrossOrigin(origins = ORIGIN, allowCredentials = "true")
     @PostMapping(value = "/active/set-phone-number")
-    public void setPhoneNumber(String phoneNumber, HttpServletResponse response) {
+    public void setPhoneNumber(@RequestBody PhoneNumberCredentials credentials, HttpServletResponse response) {
         try {
+            String phoneNumber = credentials.getPhoneNumber();
             response.setStatus(200);
             Client client = clientList.getLoggedInUser();
             client.setPhoneNumber(phoneNumber);
