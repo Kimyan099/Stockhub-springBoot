@@ -29,5 +29,4 @@ public interface NewsRepository extends JpaRepository<News, Long> {
     @Query("SELECT DISTINCT category FROM News")
     @Modifying(clearAutomatically = true)
     List<String> getAllNewsCategories();
-
 }

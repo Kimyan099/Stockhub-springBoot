@@ -3,7 +3,6 @@ package com.codecool.stockhub.service;
 import com.codecool.stockhub.logger.ExceptionLog;
 import com.codecool.stockhub.model.News;
 import com.codecool.stockhub.repository.NewsRepository;
-import netscape.javascript.JSException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
