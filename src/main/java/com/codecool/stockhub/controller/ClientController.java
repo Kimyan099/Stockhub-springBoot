@@ -201,6 +201,7 @@ public class ClientController {
             stockRepository.saveAndFlush(currentStock);
             stocks.add(currentStock);
             client.setStocks(stocks);
+            client.setBalance(client.getBalance() - stock.getPrice());
             clientList.registerUser(client);
             System.out.println(client);
 
@@ -213,6 +214,12 @@ public class ClientController {
             response.setStatus(400);
             throw new NullPointerException("User not created");
         }
+    }
+    @CrossOrigin(value = ORIGIN, allowCredentials = "true")
+    @PostMapping(value = "/sell")
+    public void sellStock(@RequestBody Stock stock, HttpServletResponse response) {
+        System.out.println("stock sold");
+        System.out.println(stock);
     }
 
     @CrossOrigin(origins = ORIGIN,  allowCredentials = "true")
