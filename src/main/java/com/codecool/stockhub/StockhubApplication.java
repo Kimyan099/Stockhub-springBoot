@@ -4,7 +4,6 @@ import com.codecool.stockhub.logger.ExceptionLog;
 import com.codecool.stockhub.model.Client;
 import com.codecool.stockhub.model.Stock;
 import com.codecool.stockhub.repository.ClientRepository;
-import com.codecool.stockhub.service.CompanyList;
 import com.codecool.stockhub.service.HTTPConnection;
 import com.codecool.stockhub.service.NewsList;
 import org.slf4j.Logger;
@@ -82,7 +81,7 @@ public class StockhubApplication {
             String newsJsonResponse = httpConnection.getContent(NEWS_URL); // for market-news
 
             try {
-                companyList.filterData(jsonResponse);
+//                companyList.filterData(jsonResponse);
 
                 newsList.getData(newsJsonResponse); // for market-news
             } catch (IllegalArgumentException e) {
