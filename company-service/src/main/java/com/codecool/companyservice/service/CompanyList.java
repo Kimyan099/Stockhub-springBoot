@@ -1,11 +1,13 @@
-package com.codecool.stockhub.service;
+package com.codecool.companyservice.service;
 
-import com.codecool.stockhub.logger.ExceptionLog;
-import com.codecool.stockhub.model.Company;
-import com.codecool.stockhub.repository.CompanyRepository;
+
+import com.codecool.companyservice.logger.ExceptionLog;
+import com.codecool.companyservice.model.Company;
+import com.codecool.companyservice.repository.CompanyRepository;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

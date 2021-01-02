@@ -25,14 +25,11 @@ import static com.codecool.stockhub.model.ApplicationUserRole.ADMIN;
 @SpringBootApplication
 public class StockhubApplication {
 
-    private static final String COMPANIES_URL = "https://finnhub.io/api/v1/stock/symbol?exchange=US&token=bu21mlf48v6u9tetnbt0";
 
     private static final String NEWS_URL = "https://finnhub.io/api/v1/news?category=general&token=bu2rf9f48v6pqlhnnvtg";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StockhubApplication.class);
 
-    @Autowired
-    private CompanyList companyList;
 
     @Autowired
     private NewsList newsList;
@@ -81,7 +78,6 @@ public class StockhubApplication {
             apple.setClient(admin);
             clientRepository.saveAndFlush(admin);
 
-            String jsonResponse = httpConnection.getContent(COMPANIES_URL);
 
             String newsJsonResponse = httpConnection.getContent(NEWS_URL); // for market-news
 

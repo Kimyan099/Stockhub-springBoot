@@ -1,4 +1,4 @@
-package com.codecool.stockhub.model;
+package com.codecool.companyservice.model;
 
 
 import lombok.AllArgsConstructor;

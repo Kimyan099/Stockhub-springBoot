@@ -1,9 +1,10 @@
-package com.codecool.stockhub.controller;
+package com.codecool.companyservice.controller;
 
-import com.codecool.stockhub.logger.ExceptionLog;
-import com.codecool.stockhub.model.Company;
-import com.codecool.stockhub.repository.CompanyRepository;
-import com.codecool.stockhub.service.CompanyList;
+
+import com.codecool.companyservice.logger.ExceptionLog;
+import com.codecool.companyservice.model.Company;
+import com.codecool.companyservice.repository.CompanyRepository;
+import com.codecool.companyservice.service.CompanyList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
