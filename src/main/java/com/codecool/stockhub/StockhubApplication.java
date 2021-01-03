@@ -5,7 +5,6 @@ import com.codecool.stockhub.model.Client;
 import com.codecool.stockhub.model.Stock;
 import com.codecool.stockhub.repository.ClientRepository;
 import com.codecool.stockhub.service.HTTPConnection;
-import com.codecool.stockhub.service.NewsList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +24,9 @@ import static com.codecool.stockhub.model.ApplicationUserRole.ADMIN;
 public class StockhubApplication {
 
 
-    private static final String NEWS_URL = "https://finnhub.io/api/v1/news?category=general&token=bu2rf9f48v6pqlhnnvtg";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StockhubApplication.class);
 
-
-    @Autowired
-    private NewsList newsList;
 
     @Autowired
     private ExceptionLog exceptionLog;
@@ -77,16 +72,6 @@ public class StockhubApplication {
             apple.setClient(admin);
             clientRepository.saveAndFlush(admin);
 
-
-            String newsJsonResponse = httpConnection.getContent(NEWS_URL); // for market-news
-
-            try {
-//                companyList.filterData(jsonResponse);
-
-                newsList.getData(newsJsonResponse); // for market-news
-            } catch (IllegalArgumentException e) {
-                exceptionLog.log(e);
-            }
         };
     }
 

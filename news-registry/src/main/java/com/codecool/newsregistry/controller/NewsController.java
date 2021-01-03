@@ -1,8 +1,8 @@
-package com.codecool.stockhub.controller;
+package com.codecool.newsregistry.controller;
 
-import com.codecool.stockhub.model.News;
-import com.codecool.stockhub.repository.NewsRepository;
-import com.codecool.stockhub.service.NewsList;
+import com.codecool.newsregistry.model.News;
+import com.codecool.newsregistry.repository.NewsRepository;
+import com.codecool.newsregistry.service.NewsList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;

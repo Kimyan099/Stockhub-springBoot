@@ -1,6 +1,6 @@
-package com.codecool.stockhub.repository;
+package com.codecool.newsregistry.repository;
 
-import com.codecool.stockhub.model.News;
+import com.codecool.newsregistry.model.News;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

@@ -9,11 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.codecool</groupId>
-	<artifactId>company-service</artifactId>
+	<artifactId>news-registry</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>company-service</name>
+	<name>news-registry</name>
 	<description>Demo project for Spring Boot</description>
-
 	<properties>
 		<java.version>11</java.version>
 		<spring-cloud.version>2020.0.0</spring-cloud.version>
@@ -123,17 +122,6 @@
 		</dependencies>
 	</dependencyManagement>
 
-<!--	<dependencyManagement>-->
-<!--		<dependencies>-->
-<!--			<dependency>-->
-<!--				<groupId>org.springframework.cloud</groupId>-->
-<!--				<artifactId>spring-cloud-starter-parent</artifactId>-->
-<!--				<version>Greenwich.RELEASE</version>-->
-<!--				<type>pom</type>-->
-<!--				<scope>import</scope>-->
-<!--			</dependency>-->
-<!--		</dependencies>-->
-<!--	</dependencyManagement>-->
 
 	<build>
 		<plugins>
@@ -151,5 +139,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>

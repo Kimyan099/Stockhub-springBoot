@@ -1,8 +1,8 @@
-package com.codecool.stockhub.service;
+package com.codecool.newsregistry.service;
 
-import com.codecool.stockhub.logger.ExceptionLog;
-import com.codecool.stockhub.model.News;
-import com.codecool.stockhub.repository.NewsRepository;
+import com.codecool.newsregistry.logger.ExceptionLog;
+import com.codecool.newsregistry.model.News;
+import com.codecool.newsregistry.repository.NewsRepository;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

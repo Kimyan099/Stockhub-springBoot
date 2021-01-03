@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+
 @SpringBootApplication
 @EnableEurekaClient
 @EnableSwagger2
@@ -28,12 +29,9 @@ public class CompanyServiceApplication {
 	@Autowired
 	private CompanyList companyList;
 
-	String jsonResponse = httpConnection.getContent(COMPANIES_URL);
-
 
 	public static void main(String[] args) {
 		SpringApplication.run(CompanyServiceApplication.class, args);
-
 	}
 
 	@Bean
@@ -41,12 +39,12 @@ public class CompanyServiceApplication {
 	public CommandLineRunner init() {
 
 		return args -> {
+				String jsonResponse = httpConnection.getContent(COMPANIES_URL);
 			try {
 				companyList.filterData(jsonResponse);
 			} catch (IllegalArgumentException e) {
 				exceptionLog.log(e);
 			}
-
 		};
 	}
 }
