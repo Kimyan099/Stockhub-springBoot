@@ -31,18 +31,17 @@ public class CompanyController {
     private CompanyList companyList;
 
     @CrossOrigin(origins = ORIGIN)
-    @GetMapping("/companies")
+    @GetMapping("")
     public List<Company> companyList(HttpServletResponse response) {
         return companyRepository.findAll();
 
     }
 
     @CrossOrigin(origins = ORIGIN)
-    @GetMapping("/companies/{symbol}")
+    @GetMapping("/{symbol}")
     public String companyBySymbol(@PathVariable String symbol, HttpServletResponse response) {
         try {
             response.setStatus(200);
-
             return companyRepository.getCompanyBySymbol(symbol).getSymbol();
 
         } catch (IllegalArgumentException e) {

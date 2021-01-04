@@ -25,31 +25,31 @@ public class NewsController {
     private NewsList newsList;
 
     @CrossOrigin(origins = ORIGIN)
-    @GetMapping("/news/category/allnews/orderby/desc")
+    @GetMapping("/category/allnews/orderby/desc")
     public List<News> newsListDESC() {
         return newsRepository.getAllNewsDESC();
     }
 
     @CrossOrigin(origins = ORIGIN)
-    @GetMapping("/news/category/allnews/orderby/asc")
+    @GetMapping("/category/allnews/orderby/asc")
     public List<News> newsListASC() {
         return newsRepository.getAllNewsASC();
     }
 
     @CrossOrigin(origins = ORIGIN)
-    @GetMapping("/news/category/{categoryName}/orderby/asc")
+    @GetMapping("/category/{categoryName}/orderby/asc")
     public List<News> newsListByCategoryASC(@PathVariable("categoryName") String categoryName) {
         return newsRepository.getNewsByCategoryASC(categoryName);
     }
 
     @CrossOrigin(origins = ORIGIN)
-    @GetMapping("/news/category/{categoryName}/orderby/desc")
+    @GetMapping("/category/{categoryName}/orderby/desc")
     public List<News> newsListByCategoryDESC(@PathVariable("categoryName") String categoryName) {
         return newsRepository.getNewsByCategoryDESC(categoryName);
     }
 
     @CrossOrigin(origins = ORIGIN)
-    @GetMapping("/news/allcategories")
+    @GetMapping("/allcategories")
     public List<String> allNewsCategories() {
         return newsRepository.getAllNewsCategories();
     }
