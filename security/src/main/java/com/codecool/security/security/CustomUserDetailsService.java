@@ -1,8 +1,10 @@
-package com.codecool.stockhub.security;
+package com.codecool.security.security;
 
 
-import com.codecool.stockhub.model.Client;
-import com.codecool.stockhub.repository.ClientRepository;
+
+import com.codecool.security.model.Client;
+import com.codecool.security.repository.ClientRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +16,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class CustomUserDetailsService implements UserDetailsService {
+
 
     private ClientRepository users;
 

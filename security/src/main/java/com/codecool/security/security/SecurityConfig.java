@@ -1,7 +1,7 @@
-package com.codecool.stockhub.security;
+package com.codecool.security.security;
 
 
-import com.codecool.stockhub.model.ApplicationUserPermission;
+import com.codecool.security.model.ApplicationUserPermission;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -11,7 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static com.codecool.stockhub.model.ApplicationUserPermission.CLIENT_READ;
+import static com.codecool.security.model.ApplicationUserPermission.CLIENT_READ;
+
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {

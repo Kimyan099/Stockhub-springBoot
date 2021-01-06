@@ -25,20 +25,25 @@ public class CompanyList {
 
 
     public void filterData(String content) {
-
+        int counter = 0;
         int length = 200;
+        int index = 0;
         try {
             JSONArray contentJsonArray = new JSONArray(content);
 
-            for (int i = 0; i < length; i++) {
+            while (counter != length) {
 
-                JSONObject currentJsonObject = contentJsonArray.getJSONObject(i);
+                JSONObject currentJsonObject = contentJsonArray.getJSONObject(index);
 
-                Company company = Company.builder()
-                        .description(currentJsonObject.getString("description"))
-                        .symbol(currentJsonObject.getString("symbol"))
-                        .build();
-                companyRepository.save(company);
+                if (currentJsonObject.getString("symbol").charAt(0) == 'A' && currentJsonObject.getString("description").length() < 30) {
+                    Company company = Company.builder()
+                            .description(currentJsonObject.getString("description"))
+                            .symbol(currentJsonObject.getString("symbol"))
+                            .build();
+                    companyRepository.save(company);
+                    counter++;
+                }
+                index++;
             }
         } catch (JSONException e) {
             exceptionLog.log(e);

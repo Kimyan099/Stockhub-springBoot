@@ -1,11 +1,12 @@
-package com.codecool.stockhub.controller;
+package com.codecool.security.controller;
 
-import com.codecool.stockhub.logger.ExceptionLog;
-import com.codecool.stockhub.model.*;
-import com.codecool.stockhub.repository.ClientRepository;
-import com.codecool.stockhub.repository.StockRepository;
+import com.codecool.security.logger.ExceptionLog;
+import com.codecool.security.model.*;
+import com.codecool.security.repository.ClientRepository;
+import com.codecool.security.repository.StockRepository;
 import com.codecool.security.security.JwtTokenServices;
-import com.codecool.stockhub.service.ClientList;
+
+import com.codecool.security.service.ClientList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.codecool.stockhub.model.ApplicationUserRole.CLIENT;
+import static com.codecool.security.model.ApplicationUserRole.CLIENT;
 
 
 @RestController

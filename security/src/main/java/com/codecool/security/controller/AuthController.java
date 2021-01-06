@@ -1,9 +1,11 @@
-package com.codecool.stockhub.controller;
+package com.codecool.security.controller;
 
 
-import com.codecool.stockhub.model.UserCredentials;
-import com.codecool.stockhub.repository.ClientRepository;
-import com.codecool.stockhub.security.JwtTokenServices;
+
+import com.codecool.security.model.UserCredentials;
+import com.codecool.security.repository.ClientRepository;
+import com.codecool.security.security.JwtTokenServices;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -22,14 +24,16 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("")
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
 
     private final JwtTokenServices jwtTokenServices;
 
-    public AuthController(AuthenticationManager authenticationManager, JwtTokenServices jwtTokenServices, ClientRepository users) {
+
+
+    public AuthController(AuthenticationManager authenticationManager, JwtTokenServices jwtTokenServices) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenServices = jwtTokenServices;
     }

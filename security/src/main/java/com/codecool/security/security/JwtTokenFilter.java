@@ -1,4 +1,4 @@
-package com.codecool.stockhub.security;
+package com.codecool.security.security;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
