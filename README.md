@@ -11,7 +11,8 @@
 - wait for the IDE to automatically download all the proper libraries needed
 - create a database wih the desired relational-database
 - connect you database with you IDE via environment variables, for Intellij Idea here is a detailed descripttion how to do it (https://www.jetbrains.com/help/idea/connecting-to-a-database.html#connect-to-amazon-redshift)
-- add environment variables, in Intellij Idea just click on StockhubApplication next to run button -> edit configurations -> environment/environment variables
+- add environment variables, in Intellij Idea just click on StockhubApplication next to run button -> edit configurations -> environment/environment variables :
+PSQL_DB_HOST=localhost;PSQL_DB_PORT=YOUR_DB_PORT;PSQL_DB_NAME=YOUR_DB_NAME;PSQL_DB_USERNAME=YOUR_DB_USERNAME;PSQL_DB_PASSWORD=YOUR_DB_PASSWORD
 - run the application
 - follow frontend instructions -> The frontend is available on this repo link: https://github.com/Kimyan099/Stockhub
 
