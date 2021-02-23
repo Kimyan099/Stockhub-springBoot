@@ -1,10 +1,23 @@
 # StockHub
 
-This is the frontend code of StockHub. 
-- The backend is available on this repo link: https://github.com/Kimyan099/StockHub
+## Requirements to run the application:
+- installation of Java 11 (https://www.oracle.com/java/)
+- installation of development environment, preferably Intellij Idea (https://www.jetbrains.com/idea/)
+- installation of relational-database, preferably Postgresql (https://www.postgresql.org/)
 
-Stockhub is a fullstack application developed over 4 sprints in a team of 4-5 people. 
-The application shows stock related charts and news. Data is obtained from finnhub API and tradingview embedded codes.
+## How to run the application?:
+- clone repository to your chosen directory
+- open it with IDE
+- wait for the IDE to automatically download all the proper libraries needed
+- create a database wih the desired relational-database
+- connect you database with you IDE via environment variables, for Intellij Idea here is a detailed descripttion how to do it (https://www.jetbrains.com/help/idea/connecting-to-a-database.html#connect-to-amazon-redshift)
+- add environment variables, in Intellij Idea just click on StockhubApplication next to run button -> edit configurations -> environment/environment variables
+- run the application
+- follow frontend instructions -> The frontend is available on this repo link: https://github.com/Kimyan099/Stockhub
+
+## What does the application do?:
+This is the backend code of a fullstack application called Stockhub developed over 4 sprints in a team of 4 people. 
+The application shows stock related charts and news and company profiles. Data is obtained from finnhub API and tradingview embedded codes.
 It uses Spring boot, Spring security and JWT, PostgreSQL, Hibernate, Zuul and Eureka on the backend and React (hooks, context) on the frontend.
 
 ### Technologies
