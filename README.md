@@ -1,6 +1,6 @@
 # StockHub
 
-This is the backend code of StockHub. 
+This is the frontend code of StockHub. 
 - The backend is available on this repo link: https://github.com/Kimyan099/StockHub
 
 Stockhub is a fullstack application developed over 4 sprints in a team of 4-5 people. 
