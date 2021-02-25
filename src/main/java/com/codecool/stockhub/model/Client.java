@@ -3,13 +3,18 @@ package com.codecool.stockhub.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
 @Entity
 @Data
+@Table
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
@@ -43,4 +48,13 @@ public class Client {
     @ToString.Exclude
     @JsonManagedReference
     private Set<Stock> stocks;
+
+    // roles of the user (ADMIN, USER,..)
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Builder.Default
+    private List<String> roles = new ArrayList<>();
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Builder.Default
+    private Set<SimpleGrantedAuthority> authorities = new HashSet<>();
 }

@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface StockRepository extends JpaRepository<Stock, Long> {
 
-    public List<Stock> getStocksByClient_Id(Long id);
+    List<Stock> getStocksByClient_Id(Long id);
 
     @Query(value="select s from Stock s where s.client.id= :id")
-    public List<Stock> getStocksByLoggedInClient(@Param("id")Long id);
+    List<Stock> getStocksByLoggedInClient(@Param("id")Long id);
 
 }
